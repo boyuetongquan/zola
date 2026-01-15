@@ -1,15 +1,22 @@
 import { createClient } from "@/lib/supabase/server"
+import { isSupabaseEnabled } from "@/lib/supabase/config"
 import { NextRequest, NextResponse } from "next/server"
+import type { Tables } from "@/app/types/database.types"
 
 export async function GET() {
   try {
     const supabase = await createClient()
 
     if (!supabase) {
-      return NextResponse.json(
-        { error: "Database connection failed" },
-        { status: 500 }
-      )
+      // Return default preferences when Supabase is not enabled
+      return NextResponse.json({
+        layout: "fullscreen",
+        prompt_suggestions: true,
+        show_tool_invocations: true,
+        show_conversation_previews: true,
+        multi_model_enabled: false,
+        hidden_models: [],
+      })
     }
 
     // Get the current user
@@ -27,7 +34,7 @@ export async function GET() {
       .from("user_preferences")
       .select("*")
       .eq("user_id", user.id)
-      .single()
+      .single() as { data: Tables<"user_preferences"> | null; error: any }
 
     if (error) {
       // If no preferences exist, return defaults
@@ -49,12 +56,24 @@ export async function GET() {
       )
     }
 
+    // Ensure data exists before accessing its properties
+    if (!data) {
+      return NextResponse.json({
+        layout: "fullscreen",
+        prompt_suggestions: true,
+        show_tool_invocations: true,
+        show_conversation_previews: true,
+        multi_model_enabled: false,
+        hidden_models: [],
+      })
+    }
+
     return NextResponse.json({
-      layout: data.layout,
-      prompt_suggestions: data.prompt_suggestions,
-      show_tool_invocations: data.show_tool_invocations,
-      show_conversation_previews: data.show_conversation_previews,
-      multi_model_enabled: data.multi_model_enabled,
+      layout: data.layout || "fullscreen",
+      prompt_suggestions: data.prompt_suggestions ?? true,
+      show_tool_invocations: data.show_tool_invocations ?? true,
+      show_conversation_previews: data.show_conversation_previews ?? true,
+      multi_model_enabled: data.multi_model_enabled ?? false,
       hidden_models: data.hidden_models || [],
     })
   } catch (error) {
@@ -71,10 +90,16 @@ export async function PUT(request: NextRequest) {
     const supabase = await createClient()
 
     if (!supabase) {
-      return NextResponse.json(
-        { error: "Database connection failed" },
-        { status: 500 }
-      )
+      // Return default preferences when Supabase is not enabled
+      return NextResponse.json({
+        success: true,
+        layout: "fullscreen",
+        prompt_suggestions: true,
+        show_tool_invocations: true,
+        show_conversation_previews: true,
+        multi_model_enabled: false,
+        hidden_models: [],
+      })
     }
 
     // Get the current user
@@ -139,7 +164,7 @@ export async function PUT(request: NextRequest) {
         }
       )
       .select("*")
-      .single()
+      .single() as { data: Tables<"user_preferences"> | null; error: any }
 
     if (error) {
       console.error("Error updating user preferences:", error)
@@ -149,13 +174,21 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    // Ensure data exists before accessing its properties
+    if (!data) {
+      return NextResponse.json(
+        { error: "Failed to retrieve updated preferences" },
+        { status: 500 }
+      )
+    }
+
     return NextResponse.json({
       success: true,
-      layout: data.layout,
-      prompt_suggestions: data.prompt_suggestions,
-      show_tool_invocations: data.show_tool_invocations,
-      show_conversation_previews: data.show_conversation_previews,
-      multi_model_enabled: data.multi_model_enabled,
+      layout: data.layout || "fullscreen",
+      prompt_suggestions: data.prompt_suggestions ?? true,
+      show_tool_invocations: data.show_tool_invocations ?? true,
+      show_conversation_previews: data.show_conversation_previews ?? true,
+      multi_model_enabled: data.multi_model_enabled ?? false,
       hidden_models: data.hidden_models || [],
     })
   } catch (error) {

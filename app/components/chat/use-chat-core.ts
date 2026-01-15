@@ -7,13 +7,13 @@ import { MESSAGE_MAX_LENGTH, SYSTEM_PROMPT_DEFAULT } from "@/lib/config"
 import { Attachment } from "@/lib/file-handling"
 import { API_ROUTE_CHAT } from "@/lib/routes"
 import type { UserProfile } from "@/lib/user/types"
-import type { Message } from "@ai-sdk/react"
+import type { UIMessage, Message } from "ai"
 import { useChat } from "@ai-sdk/react"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 type UseChatCoreProps = {
-  initialMessages: Message[]
+  initialMessages: UIMessage[]
   draftValue: string
   cacheAndAddMessage: (message: Message) => void
   chatId: string | null
@@ -132,14 +132,16 @@ export function useChatCore({
   }, [prompt, setInput])
 
   // Reset messages when navigating from a chat to home
-  if (
-    prevChatIdRef.current !== null &&
-    chatId === null &&
-    messages.length > 0
-  ) {
-    setMessages([])
-  }
-  prevChatIdRef.current = chatId
+  useEffect(() => {
+    if (
+      prevChatIdRef.current !== null &&
+      chatId === null &&
+      messages.length > 0
+    ) {
+      setMessages([])
+    }
+    prevChatIdRef.current = chatId
+  }, [chatId, messages.length, setMessages])
 
   // Submit action
   const submit = useCallback(async () => {
@@ -162,6 +164,7 @@ export function useChatCore({
       createdAt: new Date(),
       experimental_attachments:
         optimisticAttachments.length > 0 ? optimisticAttachments : undefined,
+      parts: [{ type: "text" as const, text: input }],
     }
 
     setMessages((prev) => [...prev, optimisticMessage])
@@ -313,6 +316,7 @@ export function useChatCore({
         role: "user" as const,
         createdAt: new Date(),
         experimental_attachments: target.experimental_attachments || undefined,
+        parts: [{ type: "text" as const, text: newContent }],
       }
 
       try {
@@ -417,6 +421,7 @@ export function useChatCore({
         content: suggestion,
         role: "user" as const,
         createdAt: new Date(),
+        parts: [{ type: "text" as const, text: suggestion }],
       }
 
       setMessages((prev) => [...prev, optimisticMessage])
