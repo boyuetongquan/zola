@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils"
 import type { SourceUIPart } from "@ai-sdk/ui-utils"
 import { CaretDown, Link } from "@phosphor-icons/react"
+import type { Transition } from "motion/react"
 import { AnimatePresence, motion } from "motion/react"
 import Image from "next/image"
 import { useState } from "react"
@@ -13,7 +14,7 @@ type SourcesListProps = {
   className?: string
 }
 
-const TRANSITION = {
+const TRANSITION: Transition = {
   type: "spring",
   duration: 0.2,
   bounce: 0,

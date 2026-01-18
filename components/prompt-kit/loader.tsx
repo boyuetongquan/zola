@@ -1,5 +1,6 @@
 "use client"
 
+import type { Transition } from "framer-motion"
 import { motion } from "framer-motion"
 
 // Style constants
@@ -19,11 +20,11 @@ const ANIMATION = {
   opacity: [1, 0.7, 1],
 }
 
-const TRANSITION = {
+const TRANSITION: Transition = {
   duration: ANIMATION_DURATION,
   ease: "easeInOut",
   repeat: Number.POSITIVE_INFINITY,
-  repeatType: "loop" as const,
+  repeatType: "loop",
 }
 
 export function Loader() {

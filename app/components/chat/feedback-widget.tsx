@@ -9,11 +9,12 @@ import {
 } from "@/components/motion-primitives/morphing-popover"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
 import { QuestionMark } from "@phosphor-icons/react"
+import type { Transition } from "motion/react"
 import { motion } from "motion/react"
 import { useState } from "react"
 
 const TRANSITION_POPOVER = {
-  type: "spring",
+  type: "spring" as const,
   bounce: 0.1,
   duration: 0.3,
 }
@@ -63,7 +64,7 @@ export function FeedbackWidget({ authUserId }: FeedbackWidgetProps) {
             }}
             transition={{
               duration: 0,
-              delay: isOpen ? 0 : TRANSITION_POPOVER.duration / 2,
+              delay: isOpen ? 0 : (TRANSITION_POPOVER.duration ?? 0.3) / 2,
             }}
           >
             <QuestionMark className="text-foreground size-4" />

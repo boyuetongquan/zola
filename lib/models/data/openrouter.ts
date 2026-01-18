@@ -1,4 +1,5 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
+import { LanguageModelV1 } from "ai"
 import { ModelConfig } from "../types"
 
 export const openrouterModels: ModelConfig[] = [
@@ -29,10 +30,10 @@ export const openrouterModels: ModelConfig[] = [
     modelPage: "https://deepseek.com",
     releasedAt: "2024-04-01",
     icon: "deepseek",
-    apiSdk: (apiKey?: string) =>
+    apiSdk: (apiKey?: string, opts?: { enableSearch?: boolean }) =>
       createOpenRouter({
         apiKey: apiKey || process.env.OPENROUTER_API_KEY,
-      }).chat("deepseek/deepseek-r1:free"),
+      }).chat("deepseek/deepseek-r1:free") as any as LanguageModelV1,
   },
   {
     id: "openrouter:anthropic/claude-sonnet-4",
@@ -69,7 +70,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("anthropic/claude-sonnet-4"),
+      }).chat("anthropic/claude-sonnet-4") as any as LanguageModelV1,
   },
   {
     id: "openrouter:anthropic/claude-3.7-sonnet:thinking",
@@ -106,7 +107,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("anthropic/claude-3.7-sonnet:thinking"),
+      }).chat("anthropic/claude-3.7-sonnet:thinking") as any as LanguageModelV1,
   },
   {
     id: "openrouter:google/gemini-2.5-pro-preview",
@@ -143,7 +144,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("google/gemini-2.5-pro-preview"),
+      }).chat("google/gemini-2.5-pro-preview") as any as LanguageModelV1,
   },
   {
     id: "openrouter:openai/gpt-4.1",
@@ -180,7 +181,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("openai/gpt-4.1"),
+      }).chat("openai/gpt-4.1") as any as LanguageModelV1,
   },
   {
     id: "openrouter:openai/o4-mini",
@@ -217,7 +218,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("openai/o4-mini"),
+      }).chat("openai/o4-mini") as any as LanguageModelV1,
   },
   {
     id: "openrouter:x-ai/grok-3-mini-beta",
@@ -254,7 +255,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("x-ai/grok-3-mini-beta"),
+      }).chat("x-ai/grok-3-mini-beta") as any as LanguageModelV1,
   },
   {
     id: "openrouter:google/gemini-2.5-flash-preview-05-20",
@@ -291,7 +292,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("google/gemini-2.5-flash-preview-05-20"),
+      }).chat("google/gemini-2.5-flash-preview-05-20") as any as LanguageModelV1,
   },
   {
     id: "openrouter:meta-llama/llama-3.3-8b-instruct:free",
@@ -328,7 +329,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("meta-llama/llama-3.3-8b-instruct:free"),
+      }).chat("meta-llama/llama-3.3-8b-instruct:free") as any as LanguageModelV1,
   },
   {
     id: "openrouter:openai/gpt-4.1-mini",
@@ -365,7 +366,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("openai/gpt-4.1-mini"),
+      }).chat("openai/gpt-4.1-mini") as any as LanguageModelV1,
   },
   {
     id: "openrouter:openai/gpt-4.1-nano",
@@ -402,7 +403,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("openai/gpt-4.1-nano"),
+      }).chat("openai/gpt-4.1-nano") as any as LanguageModelV1,
   },
   {
     id: "openrouter:openai/o3-mini",
@@ -437,7 +438,7 @@ export const openrouterModels: ModelConfig[] = [
         ...(opts?.enableSearch && {
           plugins: [{ id: "web", max_results: 3 }],
         }),
-      }).chat("openai/o3-mini"),
+      }).chat("openai/o3-mini") as any as LanguageModelV1,
   },
   {
     id: "openrouter:anthropic/claude-3.5-sonnet",
@@ -472,7 +473,7 @@ export const openrouterModels: ModelConfig[] = [
         ...(opts?.enableSearch && {
           plugins: [{ id: "web", max_results: 3 }],
         }),
-      }).chat("anthropic/claude-3.5-sonnet"),
+      }).chat("anthropic/claude-3.5-sonnet") as any as LanguageModelV1,
   },
   {
     id: "openrouter:google/gemini-2.0-flash-001",
@@ -507,7 +508,7 @@ export const openrouterModels: ModelConfig[] = [
         ...(opts?.enableSearch && {
           plugins: [{ id: "web", max_results: 3 }],
         }),
-      }).chat("google/gemini-2.0-flash-001"),
+      }).chat("google/gemini-2.0-flash-001") as any as LanguageModelV1,
   },
   {
     id: "openrouter:google/gemini-2.0-flash-lite-001",
@@ -542,7 +543,7 @@ export const openrouterModels: ModelConfig[] = [
         ...(opts?.enableSearch && {
           plugins: [{ id: "web", max_results: 3 }],
         }),
-      }).chat("google/gemini-2.0-flash-lite-001"),
+      }).chat("google/gemini-2.0-flash-lite-001") as any as LanguageModelV1,
   },
   {
     id: "openrouter:openai/gpt-4.5-preview",
@@ -577,7 +578,7 @@ export const openrouterModels: ModelConfig[] = [
         ...(opts?.enableSearch && {
           plugins: [{ id: "web", max_results: 3 }],
         }),
-      }).chat("openai/gpt-4.5-preview"),
+      }).chat("openai/gpt-4.5-preview") as any as LanguageModelV1,
   },
   {
     id: "openrouter:perplexity/sonar",
@@ -612,7 +613,7 @@ export const openrouterModels: ModelConfig[] = [
         ...(opts?.enableSearch && {
           plugins: [{ id: "web", max_results: 3 }],
         }),
-      }).chat("perplexity/sonar"),
+      }).chat("perplexity/sonar") as any as LanguageModelV1,
   },
   {
     id: "openrouter:perplexity/sonar-reasoning",
@@ -649,7 +650,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("perplexity/sonar-reasoning"),
+      }).chat("perplexity/sonar-reasoning") as any as LanguageModelV1,
   },
   {
     id: "openrouter:perplexity/sonar-reasoning-pro",
@@ -686,7 +687,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("perplexity/sonar-reasoning-pro"),
+      }).chat("perplexity/sonar-reasoning-pro") as any as LanguageModelV1,
   },
   {
     id: "openrouter:perplexity/sonar-pro",
@@ -723,7 +724,7 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("perplexity/sonar-pro"),
+      }).chat("perplexity/sonar-pro") as any as LanguageModelV1,
   },
   {
     id: "openrouter:perplexity/sonar-deep-research",
@@ -760,6 +761,6 @@ export const openrouterModels: ModelConfig[] = [
             plugins: [{ id: "web", max_results: 3 }],
           },
         }),
-      }).chat("perplexity/sonar-deep-research"),
+      }).chat("perplexity/sonar-deep-research") as any as LanguageModelV1,
   },
 ]

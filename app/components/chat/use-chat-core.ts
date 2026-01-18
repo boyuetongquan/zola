@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 type UseChatCoreProps = {
-  initialMessages: UIMessage[]
+  initialMessages: Message[]
   draftValue: string
   cacheAndAddMessage: (message: Message) => void
   chatId: string | null
@@ -103,7 +103,7 @@ export function useChatCore({
     append,
   } = useChat({
     api: API_ROUTE_CHAT,
-    initialMessages,
+    initialMessages: initialMessages as UIMessage[],
     initialInput: draftValue,
     onFinish: async (m) => {
       cacheAndAddMessage(m)

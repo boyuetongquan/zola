@@ -3,7 +3,6 @@ import type {
   ChatApiParams,
   LogUserMessageParams,
   StoreAssistantMessageParams,
-  SupabaseClientType,
 } from "@/app/types/api.types"
 import { FREE_MODELS_IDS, NON_AUTH_ALLOWED_MODELS } from "@/lib/config"
 import { getProviderForModel } from "@/lib/openproviders/provider-map"
@@ -16,7 +15,7 @@ export async function validateAndTrackUsage({
   userId,
   model,
   isAuthenticated,
-}: ChatApiParams): Promise<SupabaseClientType | null> {
+}: ChatApiParams) {
   const supabase = await validateUserIdentity(userId, isAuthenticated)
   if (!supabase) return null
 
@@ -57,7 +56,7 @@ export async function incrementMessageCount({
   supabase,
   userId,
 }: {
-  supabase: SupabaseClientType
+  supabase: any
   userId: string
 }): Promise<void> {
   if (!supabase) return

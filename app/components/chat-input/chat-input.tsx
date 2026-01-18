@@ -193,12 +193,12 @@ export function ChatInput({
                 isUserAuthenticated={isUserAuthenticated}
                 model={selectedModel}
               />
-              <ModelSelector
+{/* <ModelSelector
                 selectedModelId={selectedModel}
                 setSelectedModelId={onSelectModel}
                 isUserAuthenticated={isUserAuthenticated}
                 className="rounded-full"
-              />
+              /> */}
               {hasSearchSupport ? (
                 <ButtonSearch
                   isSelected={enableSearch}

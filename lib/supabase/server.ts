@@ -1,9 +1,12 @@
 import { Database } from "@/app/types/database.types"
 import { createServerClient } from "@supabase/ssr"
+import { SupabaseClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
 import { isSupabaseEnabled } from "./config"
 
-export const createClient = async () => {
+export type TypedSupabaseClient = SupabaseClient<Database>
+
+export const createClient = async (): Promise<TypedSupabaseClient | null> => {
   if (!isSupabaseEnabled) {
     return null
   }
@@ -16,9 +19,9 @@ export const createClient = async () => {
     {
       cookies: {
         getAll: () => cookieStore.getAll(),
-        setAll: (cookiesToSet) => {
+        setAll: (cookiesToSet: any) => {
           try {
-            cookiesToSet.forEach(({ name, value, options }) => {
+            cookiesToSet.forEach(({ name, value, options }: any) => {
               cookieStore.set(name, value, options)
             })
           } catch {
@@ -27,5 +30,5 @@ export const createClient = async () => {
         },
       },
     }
-  )
+  ) as any as TypedSupabaseClient
 }

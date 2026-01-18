@@ -5,10 +5,11 @@ import { toast } from "@/components/ui/toast"
 import { createClient } from "@/lib/supabase/client"
 import { isSupabaseEnabled } from "@/lib/supabase/config"
 import { CaretLeft, SealCheck, Spinner } from "@phosphor-icons/react"
+import type { Transition } from "motion/react"
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
 
-const TRANSITION_CONTENT = {
+const TRANSITION_CONTENT: Transition = {
   ease: "easeOut",
   duration: 0.2,
 }

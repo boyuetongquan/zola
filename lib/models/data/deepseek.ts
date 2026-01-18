@@ -1,4 +1,5 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
+import { LanguageModelV1 } from "ai"
 import { ModelConfig } from "../types"
 
 const deepseekModels: ModelConfig[] = [
@@ -28,10 +29,10 @@ const deepseekModels: ModelConfig[] = [
     modelPage: "https://deepseek.com",
     releasedAt: "2024-04-01",
     icon: "deepseek",
-    apiSdk: () =>
+    apiSdk: (apiKey?: string) =>
       createOpenRouter({
-        apiKey: process.env.OPENROUTER_API_KEY,
-      }).chat("deepseek/deepseek-r1:free"),
+        apiKey: apiKey || process.env.OPENROUTER_API_KEY,
+      }).chat("deepseek/deepseek-r1:free") as any as LanguageModelV1,
   },
   {
     id: "deepseek-v3",
@@ -58,10 +59,10 @@ const deepseekModels: ModelConfig[] = [
     modelPage: "https://github.com/deepseek-ai",
     releasedAt: "2024-12-26",
     icon: "deepseek",
-    apiSdk: () =>
+    apiSdk: (apiKey?: string) =>
       createOpenRouter({
-        apiKey: process.env.OPENROUTER_API_KEY,
-      }).chat("deepseek-v3"),
+        apiKey: apiKey || process.env.OPENROUTER_API_KEY,
+      }).chat("deepseek-v3") as any as LanguageModelV1,
   },
 ]
 

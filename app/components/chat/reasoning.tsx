@@ -1,6 +1,7 @@
 import { Markdown } from "@/components/prompt-kit/markdown"
 import { cn } from "@/lib/utils"
 import { CaretDownIcon } from "@phosphor-icons/react"
+import type { Transition } from "framer-motion"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 
@@ -9,7 +10,7 @@ type ReasoningProps = {
   isStreaming?: boolean
 }
 
-const TRANSITION = {
+const TRANSITION: Transition = {
   type: "spring",
   duration: 0.2,
   bounce: 0,

@@ -2,13 +2,13 @@ import { toast } from "@/components/ui/toast"
 import { checkRateLimits } from "@/lib/api"
 import type { Chats } from "@/lib/chat-store/types"
 import { REMAINING_QUERY_ALERT_THRESHOLD } from "@/lib/config"
-import type { UIMessage } from "ai"
+import type { Message } from "ai"
 import { useCallback } from "react"
 
 type UseChatOperationsProps = {
   isAuthenticated: boolean
   chatId: string | null
-  messages: UIMessage[]
+  messages: Message[]
   selectedModel: string
   systemPrompt: string
   createNewChat: (
@@ -20,7 +20,7 @@ type UseChatOperationsProps = {
   ) => Promise<Chats | undefined>
   setHasDialogAuth: (value: boolean) => void
   setMessages: (
-    messages: UIMessage[] | ((messages: UIMessage[]) => UIMessage[])
+    messages: Message[] | ((messages: Message[]) => Message[])
   ) => void
   setInput: (input: string) => void
 }
